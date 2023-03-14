@@ -65,7 +65,7 @@ resource "vsphere_virtual_machine" "domain_controller" {
   folder = var.folder
 
   provisioner "local-exec" {
-    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i '${ var.vm_ipv4_address },' ansible/windows_dc/main.yaml"
+    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i '${var.vm_ipv4_address},' ansible/windows_dc/main.yaml"
   }
 }
 
@@ -95,13 +95,13 @@ resource "vsphere_virtual_machine" "windows_ws" {
     customize {
       timeout = 30
       windows_options {
-        computer_name = "win-${count.index}"
-		join_domain = "blah.local"
-		domain_admin_user = "solaire"
-		domain_admin_password = "1qaz2wsx!QAZ@WSX"
+        computer_name         = "win-${count.index}"
+        join_domain           = "blah.local"
+        domain_admin_user     = "solaire"
+        domain_admin_password = "1qaz2wsx!QAZ@WSX"
       }
       network_interface {
-
+        dns_server_list = [var.vm_ipv4_address]
       }
       ipv4_gateway = var.vm_ipv4_gateway
     }
