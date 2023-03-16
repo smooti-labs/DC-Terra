@@ -1,54 +1,57 @@
 variable "vsphere_user" {
+  description = "vSphere user to authenticate as"
   type      = string
   nullable  = false
   sensitive = true
 }
 
 variable "vsphere_password" {
+  description = "vSphere user password"
   type      = string
   nullable  = false
   sensitive = true
 }
 
-variable "vsphere_server" {
+variable "vcenter_server" {
+  description = "vCenter server to attach to"
   nullable = false
   type     = string
 }
 
 variable "vsphere_datacenter" {
+  description = "vSphere datacenter to use"
   nullable = false
   type     = string
 }
 
 variable "vsphere_host" {
+  description = "ESXI host in vCenter for compute resources"
   nullable = false
   type     = string
 }
 
-variable "template_name" {
+variable "template" {
+  description = "Template to use"
   nullable = false
   type     = string
 }
 
 variable "vm_disk_size" {
+  description = "Disk size of VM to create"
   nullable = false
   type     = number
 }
 
-variable "network_name" {
+variable "network" {
+  description = "Network to put VM"
   nullable = false
   type     = string
 }
 
 variable "vm_name" {
+  description = "Name of VM"
   nullable = false
   type     = string
-}
-
-variable "vm_count" {
-  description = "The number of virtual machines"
-  nullable    = false
-  type        = string
 }
 
 variable "vm_cpus" {
@@ -81,21 +84,25 @@ variable "vm_scsi_type" {
 }
 
 variable "vm_ipv4_address" {
+  description = "Address to give to the virtual machine"
   nullable = false
   type     = string
 }
 
 variable "vm_ipv4_netmask" {
+  description = "Subnet of network in CIDR format"
   nullable = false
   type     = number
 }
 
 variable "vm_ipv4_gateway" {
+  description = "Gateway of network"
   nullable = false
   type     = string
 }
 
 variable "folder" {
+  description = "Where to place the virtual machine"
   nullable = false
   type     = string
 }
