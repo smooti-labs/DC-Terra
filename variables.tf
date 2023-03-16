@@ -1,3 +1,7 @@
+##############################
+# Provider information
+##############################
+
 variable "vsphere_user" {
   description = "vSphere user to authenticate as"
   type      = string
@@ -29,6 +33,10 @@ variable "vsphere_host" {
   nullable = false
   type     = string
 }
+
+##############################
+# VM information
+##############################
 
 variable "template" {
   description = "Template to use"
