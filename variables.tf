@@ -2,20 +2,6 @@
 # Provider information
 ##############################
 
-variable "vsphere_user" {
-  description = "vSphere user to authenticate as"
-  type      = string
-  nullable  = false
-  sensitive = true
-}
-
-variable "vsphere_password" {
-  description = "vSphere user password"
-  type      = string
-  nullable  = false
-  sensitive = true
-}
-
 variable "vcenter_server" {
   description = "vCenter server to attach to"
   nullable = false

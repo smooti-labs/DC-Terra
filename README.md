@@ -3,19 +3,11 @@
 ### Configure Environment Variables
 
 ```powershell
-$env:TF_VAR_vsphere_user = 'MyUserName'
-$env:TF_VAR_vsphere_password = 'MyPassword'
+$env:VSPHERE_USER = 'MyUserName'
+$env:VSPHERE_PASSWORD = 'MyPassword'
 ```
 
 ```bash
-export TF_VAR_vsphere_user='MyUserName'
-export TF_VAR_vsphere_password='MyPassword'
-```
-
-### Initialize Terraform 
-
-```bash
-terraform init # Initialize terraform directory
-
-terraform apply # Apply terraform
+export VSPHERE_USER='MyUserName'
+export VSPHERE_PASSWORD='MyPassword'
 ```
