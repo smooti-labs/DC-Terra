@@ -56,7 +56,7 @@ resource "vsphere_virtual_machine" "domain_controller" {
   }
   folder = var.folder
 
-#   provisioner "local-exec" {
-#     command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i '${var.vm_ipv4_address},' ansible/windows_dc/main.yaml --extra-vars \"ansible_user=${} ansible_password=${} safe_mode_password=${} dns_domain_name=${}\""
-#   }
+  provisioner "local-exec" {
+    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i '${var.vm_ipv4_address},' ansible/windows_dc/main.yaml --extra-vars 'ansible_user=solaire ansible_password=1qaz2wsx!QAZ@WSX safe_mode_password=PassW0rd@PassW0rd@ dns_domain_name=boob.local domain_admin_password=1qaz2wsx!QAZ@WSX'"
+  }
 }
