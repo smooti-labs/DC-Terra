@@ -11,4 +11,5 @@ module "domain-controller" {
   ipv4_gateway       = "172.16.5.1"
   dns_domain_name    = "rootkit.local"
   folder             = "Research"
+  dsrm_password      = var.dsrm_password
 }
