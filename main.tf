@@ -24,7 +24,7 @@ data "vsphere_network" "network" {
 
 # Deploy and provision domain controller
 resource "vsphere_virtual_machine" "domain_controller" {
-  name                    = "${var.vm_name}"
+  name                    = var.vm_name
   num_cpus                = var.vm_cpus
   num_cores_per_socket    = var.vm_cores
   memory                  = var.vm_memory
@@ -45,7 +45,7 @@ resource "vsphere_virtual_machine" "domain_controller" {
     customize {
       timeout = 30
       windows_options {
-        computer_name = "${var.vm_name}"
+        computer_name = var.vm_name
       }
       network_interface {
         ipv4_address = var.vm_ipv4_address
@@ -57,6 +57,6 @@ resource "vsphere_virtual_machine" "domain_controller" {
   folder = var.folder
 
   provisioner "local-exec" {
-    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i '${var.vm_ipv4_address},' ansible/windows_dc/main.yaml --extra-vars 'ansible_user=solaire ansible_password=1qaz2wsx!QAZ@WSX safe_mode_password=PassW0rd@PassW0rd@ dns_domain_name=boob.local domain_admin_password=1qaz2wsx!QAZ@WSX'"
+    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i '${var.vm_ipv4_address},' ansible/windows_dc/main.yaml --extra-vars 'ansible_user=solaire ansible_password=1qaz2wsx!QAZ@WSX safe_mode_password=${var.dsrm_password} dns_domain_name=${var.dns_domain_name} domain_admin_password=1qaz2wsx!QAZ@WSX'"
   }
 }
