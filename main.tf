@@ -22,6 +22,13 @@ data "vsphere_network" "network" {
   datacenter_id = data.vsphere_datacenter.datacenter.id
 }
 
+locals {
+  vm_scsi_type = "lsilogic-sas"
+  firmware     = "efi"
+  secure_boot  = true
+  vm_timeout   = 30
+}
+
 # Deploy and provision domain controller
 resource "vsphere_virtual_machine" "domain_controller" {
   name                    = var.vm_name
@@ -30,9 +37,9 @@ resource "vsphere_virtual_machine" "domain_controller" {
   memory                  = var.vm_memory
   resource_pool_id        = data.vsphere_host.host.resource_pool_id
   guest_id                = var.vm_guest_id
-  scsi_type               = var.vm_scsi_type
-  firmware                = "efi"
-  efi_secure_boot_enabled = true
+  scsi_type               = local.vm_scsi_type
+  firmware                = local.firmware
+  efi_secure_boot_enabled = local.secure_boot
   network_interface {
     network_id = data.vsphere_network.network.id
   }
@@ -43,7 +50,7 @@ resource "vsphere_virtual_machine" "domain_controller" {
   clone {
     template_uuid = data.vsphere_virtual_machine.template_dc.id
     customize {
-      timeout = 30
+      timeout = local.vm_timeout
       windows_options {
         computer_name = var.vm_name
       }

@@ -32,8 +32,8 @@ variable "template" {
 
 variable "vm_disk_size" {
   description = "Disk size of VM to create"
-  nullable    = false
   type        = number
+  default     = 60
 }
 
 variable "network" {
@@ -50,31 +50,26 @@ variable "vm_name" {
 
 variable "vm_cpus" {
   description = "The number of CPUs on the virtual machine"
-  nullable    = false
-  type        = string
+  type        = number
+  default     = 2
 }
 
 variable "vm_cores" {
   description = "The number of cores per CPU"
-  nullable    = false
-  type        = string
+  type        = number
+  default     = 2
 }
 
 variable "vm_memory" {
   description = "Memory in MB"
-  nullable    = false
-  type        = string
+  type        = number
+  default     = 4112
 }
 
 variable "vm_guest_id" {
   description = "Guest ID of the virtual machine"
   nullable    = false
   type        = string
-}
-
-variable "vm_scsi_type" {
-  nullable = false
-  type     = string
 }
 
 variable "vm_ipv4_address" {
