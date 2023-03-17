@@ -17,11 +17,6 @@ data "vsphere_virtual_machine" "template_dc" {
   datacenter_id = data.vsphere_datacenter.datacenter.id
 }
 
-data "vsphere_virtual_machine" "template_windows_ws" {
-  name          = "Windows-10-22H2-031323"
-  datacenter_id = data.vsphere_datacenter.datacenter.id
-}
-
 data "vsphere_network" "network" {
   name          = var.network
   datacenter_id = data.vsphere_datacenter.datacenter.id
