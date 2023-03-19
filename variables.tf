@@ -41,20 +41,12 @@ variable "disk_size" {
 }
 
 # Domain controller information
-<<<<<<< HEAD
 variable "dc_name" {
-=======
-variable "name" {
->>>>>>> 5ec1e9dc2bae7dba9821daecf02abda005cbe523
   description = "Name of VM"
   nullable    = false
   type        = string
 }
-<<<<<<< HEAD
 variable "dc_template" {
-=======
-variable "template" {
->>>>>>> 5ec1e9dc2bae7dba9821daecf02abda005cbe523
   description = "Template to use"
   nullable    = false
   type        = string
@@ -64,11 +56,7 @@ variable "network" {
   nullable    = false
   type        = string
 }
-<<<<<<< HEAD
 variable "dc_guest_id" {
-=======
-variable "guest_id" {
->>>>>>> 5ec1e9dc2bae7dba9821daecf02abda005cbe523
   description = "Guest ID of the virtual machine"
   nullable    = false
   type        = string

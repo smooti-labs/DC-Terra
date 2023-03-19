@@ -12,7 +12,6 @@ data "vsphere_network" "network" {
   datacenter_id = data.vsphere_datacenter.datacenter.id
 }
 
-<<<<<<< HEAD
 data "vsphere_virtual_machine" "dc_template" {
   name          = var.dc_template
   datacenter_id = data.vsphere_datacenter.datacenter.id
@@ -23,13 +22,6 @@ data "vsphere_virtual_machine" "ws_template" {
   datacenter_id = data.vsphere_datacenter.datacenter.id
 }
 
-=======
-data "vsphere_virtual_machine" "template" {
-  name          = var.template
-  datacenter_id = data.vsphere_datacenter.datacenter.id
-}
-
->>>>>>> 5ec1e9dc2bae7dba9821daecf02abda005cbe523
 # Deploy and provision domain controller
 resource "vsphere_virtual_machine" "domain_controller" {
   name                    = var.dc_name
@@ -49,11 +41,7 @@ resource "vsphere_virtual_machine" "domain_controller" {
     size  = var.disk_size
   }
   clone {
-<<<<<<< HEAD
     template_uuid = data.vsphere_virtual_machine.dc_template.id
-=======
-    template_uuid = data.vsphere_virtual_machine.template.id
->>>>>>> 5ec1e9dc2bae7dba9821daecf02abda005cbe523
     customize {
       timeout = local.timeout
       windows_options {
