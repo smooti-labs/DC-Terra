@@ -1,0 +1,106 @@
+---
+- name: Windows Domain Controller
+  hosts: all
+  gather_facts: false
+  vars_prompt:
+    - name: ansible_user
+      prompt: Please provide ansible user username
+      private: no
+
+    - name: ansible_password
+      prompt: Please provide ansible user password
+      encrypt: sha512_crypt
+      private: yes
+
+    - name: domain_admin_password
+      prompt: Please provide domain admin password
+      encrypt: sha512_crypt
+      private: yes
+
+    - name: safe_mode_password
+      prompt: Please provide DSRM password
+      private: yes
+
+    - name: dns_domain_name
+      prompt: Please provide desired domain name (ex. "lordran.local")
+      private: no
+
+  vars_files:
+    - ../vars/vars.yaml
+
+  tasks:
+    - name: Set Administrator Password
+      win_user:
+        name: Administrator
+        password: "{{ domain_admin_password }}"
+
+    - name: Require Administrator to have password
+      win_command: net user administrator /passwordreq:yes
+
+    - name: Install Windows DNS Feature
+      win_feature:
+        name: DNS
+        state: present
+        include_management_tools: yes
+        include_sub_features: yes
+      register: dns_output
+
+    - name: Install RSAT AD Admin Center
+      win_feature:
+        name: RSAT-AD-AdminCenter
+        state: present
+      register: rsat_output
+
+    - name: Install AD Domain Services
+      win_feature:
+        name: AD-Domain-Services
+        include_management_tools: yes
+        include_sub_features: yes
+        state: present
+      register: ad_output
+
+    - name: Creating a windows domain
+      win_domain:
+        dns_domain_name: "{{ dns_domain_name }}"
+        safe_mode_password: "{{ safe_mode_password }}"
+      register: win_domain_output
+
+    - name: Setting DNS Servers
+      win_dns_client:
+        adapter_names: "*"
+        ipv4_addresses: "127.0.0.1"
+
+    - name: Rebooting Server
+      win_reboot:
+        reboot_timeout_sec: 300
+        shutdown_timeout: 300
+
+  # - name: Validate Domain Controller
+  #   win_domain_controller:
+  #     dns_domain_name: "{{ windows_domain_controller_info['dns_domain_name'] }}"
+  #     domain_admin_user: "{{ windows_domain_controller_info['domain_admin_user'] }}"
+  #     domain_admin_password: "{{ domain_admin_password }}"
+  #     safe_mode_password: "{{ safe_mode_password }}"
+  #     state: "{{ windows_domain_controller_info['state'] }}"
+  #   register: domain_controller_output
+
+# # DEBUG
+#   - name: DNS Output
+#     ansible.builtin.debug:
+#       var: dns_output
+
+#   - name: RSAT Output
+#     ansible.builtin.debug:
+#       var: rsat_output
+
+#   - name: AD Output
+#     ansible.builtin.debug:
+#       var: ad_output
+
+#   - name: Win Domain Output
+#     ansible.builtin.debug:
+#       var: win_domain_output
+
+# - name: DC Output
+#   ansible.builtin.debug:
+#     var: domain_controller_output
